@@ -1,0 +1,33 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: ekses.aws.crp.allianz.com
+  labels:
+    provider:
+  spec:
+    compositeTypeRef:
+      apiVersion: crp.allianz.com/v1alpha1
+      kind: XEks
+    resources:
+      - name: eks
+        base:
+          apiVersion: eks.aws.crossplane.io/v1beta1
+          kind: Cluster
+          metadata:
+            name: first-eks
+          spec:
+            forProvider:
+              region: us-east-1
+              resourcesVpcConfig:
+              endpointPrivateAccess: true
+              endpointPublicAccess: true
+              # Defined in examples/ec2
+              subnetIdRefs:
+                - name: sample-subnet1
+                - name: sample-subnet2
+              securityGroupIdRefs:
+                - name: sample-cluster-sg
+          patches:
+            - fromFieldPath: "spec.parameter.name"
+            - toFieldPath: "spec.forProvider.displayName"
+        

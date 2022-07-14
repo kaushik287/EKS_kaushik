@@ -1,0 +1,10 @@
+apiVersion: crp.allianz.com/v1alpha1
+kind: XEks
+metadata:
+  name: kaushik-cluster
+spec:
+  parameters:
+    name: DemoEks
+  compositionSelector:
+    matchLabels:
+      provider: aws
